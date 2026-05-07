@@ -3,9 +3,7 @@
 This is a minimal static Progressive Web App that:
 
 - Asks for a name and birthday date and stores it in `localStorage`.
-- Checks once a minute and shows an in-app surprise modal when today's date matches the saved birthday.
-- Uses the Web Notifications API (request permission) to show a notification when a birthday occurs.
-- Generates a simple gift card image you can download as PNG.
+- Generates a simple gift card image you can download as PNG and optionally send via email/WhatsApp using the backend.
 
 How to test:
 
@@ -16,10 +14,9 @@ python -m http.server 8000
 ```
 
 2. Visit `http://localhost:8000/`.
-3. Enter a name and a birthday (set the date to today to test). Click `Save Birthday`.
-4. Allow notifications when prompted.
-5. Click `Generate Gift Card` to preview and `Download PNG` to save.
-6. Optionally install the site as a PWA (browser UI) to add to your phone and receive notifications when the site is open or installed.
+3. Enter a name and a birthday. Click `Save Details`.
+4. Click `Generate Gift Card` to preview and `Download PNG` to save.
+6. Optionally install the site as a PWA (browser UI) to add it to your phone.
 
 Notes & next steps:
 

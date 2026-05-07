@@ -11,9 +11,6 @@
   const giftCanvas=document.getElementById('giftCanvas');
   const downloadBtn=document.getElementById('downloadBtn');
   const closeGiftBtn=document.getElementById('closeGiftBtn');
-  const surpriseModal=document.getElementById('surpriseModal');
-  const surpriseText=document.getElementById('surpriseText');
-  const closeModal=document.getElementById('closeModal');
 
   const STORAGE_KEY='birthday-surprise-data-v1';
 
@@ -44,40 +41,6 @@
       emailEl.value=obj.email||'';
       genderEl.value=obj.gender||'unspecified';
     }catch(e){}
-  }
-
-  function askNotificationPermission(){
-    if(!('Notification' in window)) return;
-    if(Notification.permission==='default'){
-      Notification.requestPermission();
-    }
-  }
-
-  function checkForBirthday(){
-    const raw=localStorage.getItem(STORAGE_KEY);
-    if(!raw) return;
-    let obj; try{obj=JSON.parse(raw)}catch(e){return}
-    if(!obj.date) return;
-    const today=new Date();
-    const b=new Date(obj.date);
-    if(today.getMonth()===b.getMonth() && today.getDate()===b.getDate()){
-      triggerSurprise(obj.name||'');
-    }
-  }
-
-  let lastShownDate='';
-  function triggerSurprise(name){
-    const todayKey=(new Date()).toDateString();
-    if(lastShownDate===todayKey) return; // only once per day
-    lastShownDate=todayKey;
-    const text=`It's ${name}'s birthday today!`;
-    surpriseText.textContent=text;
-    surpriseModal.hidden=false;
-    try{
-      if(Notification.permission==='granted'){
-        new Notification('Birthday Surprise', {body:text, vibrate:[200,100,200]});
-      }
-    }catch(e){console.warn(e)}
   }
 
   function computeAge(birthDate){
@@ -142,11 +105,8 @@
   sendBtn.addEventListener('click',sendCard);
   downloadBtn.addEventListener('click',downloadCanvas);
   closeGiftBtn.addEventListener('click',()=>giftArea.hidden=true);
-  closeModal.addEventListener('click',()=>surpriseModal.hidden=true);
-
-  // periodic check (every minute) and on load
-  loadFull(); askNotificationPermission(); checkForBirthday();
-  setInterval(checkForBirthday,60*1000);
+  // on load
+  loadFull();
 
   // register service worker for simple caching and PWA
   if('serviceWorker' in navigator){
