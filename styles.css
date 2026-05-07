@@ -1,0 +1,14 @@
+:root{--bg:#f3f4f6;--card:#ffffff;--accent:#6b46c1}
+*{box-sizing:border-box}
+body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);margin:0;padding:24px}
+.container{max-width:760px;margin:0 auto}
+.card{background:var(--card);padding:18px;border-radius:8px;box-shadow:0 6px 18px rgba(16,24,40,.05);margin-bottom:16px}
+label{display:block;margin-top:8px;color:#334155}
+input{width:100%;padding:8px;margin-top:6px;border:1px solid #e2e8f0;border-radius:6px}
+.row{display:flex;gap:8px;margin-top:12px}
+button{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:6px;cursor:pointer}
+button[disabled]{opacity:.6;cursor:default}
+.note{font-size:13px;color:#64748b;margin-top:12px}
+.modal{position:fixed;inset:0;background:rgba(2,6,23,.5);display:flex;align-items:center;justify-content:center}
+.modal-content{background:white;padding:22px;border-radius:10px;max-width:400px;text-align:center}
+#giftCanvas{width:100%;height:auto;border:1px dashed #e2e8f0;border-radius:6px}
