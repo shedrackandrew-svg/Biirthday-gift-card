@@ -81,19 +81,55 @@
     const a=document.createElement('a'); a.href=url; a.download='gift-card.png'; document.body.appendChild(a); a.click(); a.remove();
   }
 
+  function canvasBlob(){
+    return new Promise((resolve) => giftCanvas.toBlob(resolve, 'image/png'));
+  }
+
   async function sendCard(){
-    const apiUrlInput=document.getElementById('apiUrl');
-    const apiUrl=apiUrlInput.value.trim();
-    if(!apiUrl){alert('Please provide the server API URL in the form to send messages.');return}
-    const name=nameEl.value.trim(); const phone=phoneEl.value.trim(); const email=emailEl.value.trim(); const gender=genderEl.value;
+    const name=nameEl.value.trim();
+    const phone=phoneEl.value.trim();
+    const email=emailEl.value.trim();
+    const gender=genderEl.value;
     if(!name){alert('Add a name');return}
+
     // draw to ensure canvas updated
     drawGiftCard(name, gender, bdayEl.value);
-    const dataUrl=giftCanvas.toDataURL('image/png');
+
+    const message = `Hi ${name}! Here is your birthday gift card. You can download it from the page after I send it.`;
+
     try{
-      const res=await fetch(apiUrl.replace(/\/+$/,'')+'/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,email,gender,birthday:bdayEl.value,image:dataUrl})});
-      const j=await res.json();
-      if(res.ok) alert('Sent successfully'); else alert('Send failed: '+(j.error||res.statusText));
+      const blob = await canvasBlob();
+      const file = new File([blob], 'gift-card.png', { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+        await navigator.share({
+          title: 'Birthday Gift Card',
+          text: message,
+          files: [file]
+        });
+        return;
+      }
+
+      downloadCanvas();
+
+      const actions = [];
+      if (phone) {
+        const cleanPhone = phone.replace(/[^\d+]/g, '');
+        const waUrl = `https://wa.me/${cleanPhone.replace(/^\+/, '')}?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+        actions.push('WhatsApp');
+      }
+      if (email) {
+        const mailUrl = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent('Birthday Gift Card')}&body=${encodeURIComponent(message + '\n\nDownload the card from the page.')}`;
+        window.open(mailUrl, '_blank', 'noopener,noreferrer');
+        actions.push('email');
+      }
+
+      if (!actions.length) {
+        alert('Card downloaded. Use the Download PNG button to share it.');
+      } else {
+        alert(`Card downloaded and opened ${actions.join(' and ')}.`);
+      }
     }catch(e){alert('Send error: '+e.message)}
   }
 

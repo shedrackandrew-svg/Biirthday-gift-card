@@ -1,6 +1,6 @@
 {
-  "name": "Birthday Surprise",
-  "short_name": "Surprise",
+  "name": "Birthday Gift Card",
+  "short_name": "Gift Card",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Birthday Surprise</title>
+  <title>Birthday Gift Card</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="container">
-    <h1>Birthday Surprise</h1>
+    <h1>Birthday Gift Card</h1>
     <section class="card">
       <label for="name">Name</label>
       <input id="name" placeholder="Friend's name">
@@ -26,14 +26,12 @@
       </select>
       <label for="bday">Birthday</label>
       <input id="bday" type="date">
-      <label for="apiUrl">Server API URL (optional)</label>
-      <input id="apiUrl" placeholder="https://your-server.example.com">
       <div class="row">
         <button id="saveBtn">Save Details</button>
         <button id="generateBtn">Generate Gift Card</button>
         <button id="sendBtn">Send</button>
       </div>
-      <p class="note">Install the site as a PWA to add it to your phone.</p>
+      <p class="note">Send now uses your phone's share sheet or opens WhatsApp/email directly. No server needed.</p>
     </section>
 
     <section class="card" id="giftCardArea" hidden>
@@ -46,7 +44,7 @@
     </section>
   </main>
 
-  <!-- Surprise modal removed per user request -->
+  <!-- modal removed -->
 
   <script src="app.js" defer></script>
 </body>

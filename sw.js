@@ -1,4 +1,4 @@
-const CACHE_NAME='birthday-surprise-v1';
+const CACHE_NAME='birthday-gift-card-v1';
 const ASSETS=['/index.html','/styles.css','/app.js','/manifest.json'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)))});
 self.addEventListener('fetch',event=>{event.respondWith(caches.match(event.request).then(r=>r||fetch(event.request)))});
